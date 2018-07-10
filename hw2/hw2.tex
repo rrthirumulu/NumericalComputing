@@ -1,2 +1,58 @@
-\documentclass[12pt]{article}
+\documentclass{article}
 
+% Packages
+\usepackage{amsmath, amssymb}   % math formatting & symbols
+\usepackage{graphicx}           % insert graphics
+%\usepackage{eulervm, bookman}   % fonts for math & symbols
+\usepackage{fullpage}          % fullpage margins
+
+\begin{document}
+% Title 
+\title{Math 104A: Homework 2}
+\author{Raghav Thirumulu, Perm 3499720 \\ \texttt{rrajuthirumulu@umail.ucsb.edu}}
+\maketitle
+
+\begin{enumerate}
+    \item % 1 
+        \begin{enumerate}
+            \item % 1a
+                We must construct the basis polynomials first.
+                \begin{align*}
+                    L_{2,0}(x)    &= \frac{(x-x_{1})(x-x_{2})}{(x_{0}-x_{1})(x_{0}-x_{2})} =                           \frac{(x-1)(x-3)}{(0-1)(0-3)} =
+                                     \frac{x^2-4x+3}{3}   \\
+                    L_{2,1}(x)    &= \frac{(x-x_{0})(x-x_{2})}{(x_{1}-x_{0})(x_{1}-x_{2})} =                           \frac{(x-0)(x-3)}{(1-0)(1-3)} =
+                                     \frac{x^2-3x}{-2}   \\
+                    L_{2,2}(x)    &= \frac{(x-x_{0})(x-x_{1})}{(x_{2}-x_{0})(x_{2}-x_{1})} =                           \frac{(x-0)(x-1)}{(3-0)(3-1)} =
+                                     \frac{x^2-x}{6}   \\
+                \end{align*}    
+                Now use the Lagrange interpolation formula to find \textit{P}\textsubscript{2}(\textit{x})
+                \begin{align*}
+                    P_{2}(x)  & = f(x_{0})L_{2,0}(x) + f(x_{1})L_{2,1}(x) + f(x_{2})L_{2,2}(x)\\
+                              & = 1(\frac{x^2-4x+3}{3}) + 1(\frac{x^2-3x}{-2}) - 5(\frac{x^2-x}{6})\\
+                              & = -x^2 + x + 1\\
+                \end{align*}
+            \item % 1b
+                Solve for \textit{P}\textsubscript{2}(\textit{x}) where \textit{x} = 2
+                \begin{align*}
+                    P_{2}(2)  & = -(2)^2 + 2 + 1 = -1\\
+                \end{align*}
+        \end{enumerate}
+    \item % 2 
+        Second question goes here
+        \begin{enumerate}
+            \item % 2a
+                two a goes here
+            \item % 2b 
+                two b goes here
+        \end{enumerate}
+    \item % 3
+        Third question here
+        \begin{center}
+            \includegraphics[scale=0.5]{flowline1.png}
+        \end{center}
+    \item % 4 
+        Fourth question goes here
+\end{enumerate}
+
+
+\end{document}
