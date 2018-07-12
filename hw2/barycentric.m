@@ -1,5 +1,5 @@
 function T = barycentric(x,y,w,z)
-% Computer code for applying Barycentric Formula
+% Computer code for implmenting Barycentric Formula
 % Input:  x --- sample input points
 %         y --- sample output points
 %         w --- weights calculated through barycentric_weights.m

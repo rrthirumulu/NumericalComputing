@@ -20,7 +20,7 @@ for j=1:n
             w = w*(x(j)-x(k));
         end
     end
-    T(j)=w;d 
+    T(j)=w; 
 end
 
 % We want the reciprocal of the calculation of w
