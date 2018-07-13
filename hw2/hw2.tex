@@ -3,8 +3,18 @@
 % Packages
 \usepackage{amsmath, amssymb}   % math formatting & symbols
 \usepackage{graphicx}           % insert graphics
+\usepackage{listings}
 %\usepackage{eulervm, bookman}   % fonts for math & symbols
 \usepackage{fullpage}          % fullpage margins
+
+\lstset{language=Matlab,
+    basicstyle=\scriptsize\ttfamily,
+    stringstyle=\ttfamily,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ffff,
+    frame=single,
+}
 
 \begin{document}
 % Title 
@@ -38,20 +48,425 @@
                 \end{align*}
         \end{enumerate}
     \item % 2 
-        Second question goes here
         \begin{enumerate}
             \item % 2a
-                two a goes here
+                \begin{lstlisting}
+                function T = lebesgue(x,xbar) 
+                % Computer code for evaluating Lebesque function
+                % Input:  x    --- nodes for interpolation;
+                %         xbar --- point for evaluation;
+                % Output: T    --- the evaluation of the Lebesgue function
+                %
+                % Author: Raghav Thirumulu, Perm 3499720
+                % Date:   07/10/2018
+                
+                % Store length of x in n, Create 1xn array of ones for storing values
+                n=length(x);
+                L=ones(1,n);
+
+                % Iterate through the interpolation points
+                for i=1:n
+                    for j=1:n
+                        if j~=i
+                            L(i) = L(i) * ( (xbar-x(j)) / (x(j)-x(i)) ) ;
+                        end
+                    end
+                end
+
+                % Take the absolute value of the sum of the elements of L
+                T = sumabs(L);
+
+                end
+                
+                \end{lstlisting}
+            
             \item % 2b 
-                two b goes here
+                \begin{lstlisting}
+                function F = lebesgue_run(n)
+                % Computer code for calling lebesque.m and finding the constant
+                % based on number of evaluation points
+                % Input:  n    --- number of evaluation points;
+                % Output: F    --- the Lebesgue constant
+                %
+                % Author: Raghav Thirumulu, Perm 3499720
+                % Date:   07/10/2018
+
+                % Create a row vector for storing interpolation points
+                x=zeros(1,n+1);
+
+                % Find interpolation points and store in x using given formula
+                for j=1:n+1
+                    x(j)=-1+(j-1)*(2/n);
+                end
+
+                % Adjust parameter for plotting resolution
+                m=1000;
+                T=zeros(1,m+1);
+                xbar=zeros(1,m+1);
+
+                % Find points for xbar through iteration with plotting resolution
+                for k=1:m+1
+                    xbar(k)=-1+(k-1)*(2/m);
+                    T(k)=lebesgue(x,xbar(k));
+                end
+
+                % Plot the Lebesgue function
+                plot(xbar,T);
+                xlabel('x');
+                ylabel('L(x)');
+                title(['n = ' num2str(n)]);
+
+                % Find the norm using the data, F will be Lebesgue constant
+                F=norm(T,Inf);
+                end
+                \end{lstlisting}
+                
+                \begin{center}
+                    \includegraphics[scale=0.6]{n4.png}
+                    \includegraphics[scale=0.6]{n10.png}
+                    \includegraphics[scale=0.6]{n20.png}
+                \end{center}
+                
+                The Lebesgue constant for n=4 is 2.2078 \\
+                The Lebesgue constant for n=10 is 29.8981 \\
+                The Lebesgue constant for n=20 is 10979 \\
+                
+                \item % 2b 
+                \begin{lstlisting}
+                function F = lebesgue_run2(n)
+                % Computer code for calling lebesque.m and finding the constant
+                % based on number of evaluation points
+                % Input:  n    --- number of evaluation points;
+                % Output: F    --- the Lebesgue constant
+                %
+                % Author: Raghav Thirumulu, Perm 3499720
+                % Date:   07/10/2018
+
+                % Create a row vector for storing interpolation points
+                x=zeros(1,n+1);
+
+                % Find interpolation points and store in x using given formula
+                for j=1:n+1
+                    x(j)=cos((j-1)*pi/n);
+                end
+
+                % Adjust parameter for plotting resolution
+                m=1000;
+                T=zeros(1,m+1);
+                xbar=zeros(1,m+1);
+
+                % Find points for xbar through iteration with plotting resolution
+                for k=1:m+1
+                    xbar(k)=-1+(k-1)*(2/m);
+                    T(k)=lebesgue(x,xbar(k));
+                end
+
+                % Plot the Lebesgue function
+                plot(xbar,T);
+                xlabel('x');
+                ylabel('L(x)');
+                title(['n = ' num2str(n)]);
+
+                % Find the norm using the data, F will be Lebesgue constant
+                F=norm(T,Inf);
+                end
+                \end{lstlisting}
+                
+                \begin{center}
+                    \includegraphics[scale=0.6]{n4_2.png}
+                    \includegraphics[scale=0.6]{n10_2.png}
+                    \includegraphics[scale=0.6]{n20_2.png}
+                \end{center}
+                
+                The Lebesgue constant for n=4 is 1.7988 \\
+                The Lebesgue constant for n=10 is 2.4210 \\
+                The Lebesgue constant for n=20 is 2.8677 \\
+                
+                The Lebesgue function fluctuates more as n increases with Chebyshev points rather than equidistributed points. The Lebesgue constant also increases faster with equidistributed points than it does with Chebyshev points.
+            
+            
         \end{enumerate}
     \item % 3
-        Third question here
-        \begin{center}
-            \includegraphics[scale=0.5]{flowline1.png}
-        \end{center}
+    \begin{enumerate}
+    \item 
+        \begin{lstlisting}
+        function T = barycentric_weights(x)
+        % Computer code for finding the weights of the Barycentric Formula
+        % Input:  x --- input points;
+        % Output: T --- vector of weights to plug into barycentric.m
+        %
+        % Author: Raghav Thirumulu, Perm 3499720
+        % Date:   07/11/2018
+
+        % Find length of our input list, create another vector to substitute 
+        % weights
+        n=length(x);
+        T=zeros(1,n);
+
+        % Iterate through the input list and with interpolation, use the formula 
+        % for calculating the weights
+        for j=1:n
+            w=1;
+            for k=1:n
+                if j~=k
+            w = w*(x(j)-x(k));
+            end
+        end
+        T(j)=w; 
+        end
+
+        % We want the reciprocal of the calculation of w
+        T=1./T;
+
+        end
+        \end{lstlisting}
+        
+        \begin{lstlisting}
+        function T = barycentric(x,y,w,z)
+        % Computer code for implmenting Barycentric Formula
+        % Input:  x --- sample input points
+        %         y --- sample output points
+        %         w --- weights calculated through barycentric_weights.m
+        %         z --- point we are trying to approximate  
+        % Output: T --- approximation for f(x) using Barycentric Formula
+        % Author: Raghav Thirumulu, Perm 3499720
+        % Date:   07/11/2018
+
+        % Find length of the lists we are working with, create vector for
+        % approximating Barycentric
+        n=length(x);
+        m=length(z);
+        T=zeros(1,m);
+
+        % Iterate through the lists, finding the interpolation values at each node
+        for i=1:m
+            k=0;
+            num=0;
+            den=0;
+            for j=1:n
+                if z(i)==x(j)
+                    T(i)=y(j);
+                    k=1;
+                else
+                    % Solve for numerator and denomintor of Barycentric formula
+                    num=num+(w(j)*y(j))/(z(i)-x(j));
+                    den=den+(w(j)/(z(i)-x(j)));
+                end
+            end
+            if k==0
+                T(i)=num/den;
+            end
+        end
+        \end{lstlisting}
+        
+        \item
+        \begin{lstlisting}
+        function T = barycentric_run(x,y,z)
+        % Computer code for applying Barycentric Formula
+        % Input:  x --- sample input points
+        %         y --- sample output points
+        %         z --- point we are trying to approximate  
+        % Output: T --- approximation for f(x) using Barycentric Formula
+        % Author: Raghav Thirumulu, Perm 3499720
+        % Date:   07/11/2018
+
+        % Calculate weights using barycentric_weights.m
+        w=barycentric_weights(x);
+
+        % Pass calculated weights along with sample points to barycentric
+        p=barycentric(x,y,w,z);
+        disp(p);
+
+        end
+        \end{lstlisting}
+        
+        Running the function above with the column \textit{x\textsubscript{j}} stored in a vector called \textit{x} and column \textit{f}(\textit{x\textsubscript{j}}) stored in a vector called \textit{y}, along with \textit{z}=2 gives us an approximation of \textit{f}(2)=0.8520
+        
+        
+        
+    \end{enumerate}
     \item % 4 
-        Fourth question goes here
+        \begin{enumerate}
+            \item 
+            \begin{lstlisting}
+            function T = runge(n)
+            % Computer code for finding the weights of the Barycentric Formula
+            % Input:  x --- input points;
+            % Output: T --- vector of weights to plug into barycentric.m
+            %
+            % Author: Raghav Thirumulu, Perm 3499720
+            % Date:   07/11/2018
+
+            % Create row vectors based on n or number of nodes
+            x=zeros(1,n+1);
+            y=zeros(1,n+1);
+            w=zeros(1,n+1);
+
+            % Iterate through the function, finding the x and y values based on the
+            % given formula
+            for j=1:n+1
+                x(j)=-5+(j-1)*(10/n);
+                y(j)=1/(1+(x(j))^2);
+            end
+
+            % For equidistributed nodes we can use binomial coefficient
+            for i=1:n+1
+                w(i)=((-1)^(i-1))*nchoosek(n,i-1);
+            end
+
+            % We now will create a function with a very high resolution
+            m=1000;
+            z=zeros(1,m+1);
+            F=zeros(1,m+1);
+
+            % Iterate through the formula given for larger number m
+            for k=1:m+1
+                z(k)=-5+(k-1)*(10/m);
+                F(k)=1/(1+(z(k))^2);
+            end
+
+            % Plot approximation versus actual function to visualize accuracy
+            T = barycentric(x,y,w,z);
+            plot(z,T); hold on
+            plot(z,F,'g');
+            xlabel('x');
+            ylabel('y');
+            legend('Pn(x)','f(x)');
+            title(['n = ' num2str(n)]);
+            hold off
+                x(j)=-5+(j-1)*(10/n);
+                y(j)=1/(1+(x(j))^2);
+            end
+            
+            \end{lstlisting}
+            
+            \begin{center}
+                    \includegraphics[scale=0.6]{runge4_a.png}
+                    \includegraphics[scale=0.6]{runge8_a.png}
+                    \includegraphics[scale=0.6]{runge12_a.png}
+            \end{center}
+            
+            \item
+            \begin{lstlisting}
+            function T = runge2(n)
+            % Computer code for finding the weights of the Barycentric Formula
+            % using Chebyshev points
+            % Input:  x --- input points;
+            % Output: T --- vector of weights to plug into barycentric.m
+            %
+            % Author: Raghav Thirumulu, Perm 3499720
+            % Date:   07/11/2018
+
+            % Create row vectors based on n or number of nodes
+            x=zeros(1,n+1);
+            y=zeros(1,n+1);
+            w=zeros(1,n+1);
+
+            % Iterate through the function, finding the x and y values based on the
+            % given formula
+            for j=1:n+1
+                x(j)=5*cos((n+1-j)*pi/n);
+                y(j)=1/(1+(x(j))^2);
+            end
+
+            w(1)=0.5*((-1)^n);
+            w(n+1)=0.5;
+            for i=2:n
+                w(i)=(-1)^(n+1-i);
+            end
+
+            % We now will create a function with a very high resolution
+            m=1000;
+            z=zeros(1,m+1);
+            F=zeros(1,m+1);
+
+            % Iterate through the formula given for larger number m
+            for k=1:m+1
+                z(k)=5*cos((m+1-k)*pi/m);
+                F(k)=1/(1+(z(k))^2);
+            end
+
+            % Plot approximation versus actual function to visualize accuracy
+            T = barycentric(x,y,w,z);
+            plot(z,T); hold on
+            plot(z,F,'g');
+            xlabel('x');
+            ylabel('y');
+            legend('Pn(x)','f(x)');
+            title(['n = ' num2str(n)]);
+            hold off
+            end
+            \end{lstlisting}
+            
+            \begin{center}
+            \includegraphics[scale=0.6]{runge4_b.png}
+            \includegraphics[scale=0.6]{runge8_b.png}
+            \includegraphics[scale=0.6]{runge12_b.png}
+            \includegraphics[scale=0.6]{runge100_b.png}
+            \end{center}
+            
+            \item
+            \begin{lstlisting}
+            function T = runge3(n)
+            % Computer code for finding the weights of the Barycentric Formula
+            % using equidistributed nodes. We are approximating a different function
+            % than from part a
+            % Input:  x --- input points;
+            % Output: T --- vector of weights to plug into barycentric.m
+            %
+            % Author: Raghav Thirumulu, Perm 3499720
+            % Date:   07/11/2018
+
+            % Create row vectors based on n or number of nodes
+            x=zeros(1,n+1);
+            y=zeros(1,n+1);
+            w=zeros(1,n+1);
+
+            % Iterate through the function, finding the x and y values based on the
+            % given formula
+            for j=1:n+1
+                x(j)=-5+(j-1)*(10/n);
+                y(j)=exp(-(x(j)^2)/5);
+            end
+
+            % For equidistributed nodes we can use binomial coefficient
+            for i=1:n+1
+                w(i)=((-1)^(i-1))*nchoosek(n,i-1);
+            end
+
+            % We now will create a function with a very high resolution
+            m=1000;
+            z=zeros(1,m+1);
+            F=zeros(1,m+1);
+
+            % Iterate through the formula given for larger number m
+            for k=1:m+1
+                z(k)=-5+(k-1)*(10/m);
+                F(k)=exp(-(z(k)^2)/5);
+            end
+
+            % Plot approximation versus actual function to visualize accuracy
+            T = barycentric(x,y,w,z);
+            plot(z,T); hold on
+            plot(z,F,'g');
+            xlabel('x');
+            ylabel('y');
+            legend('Pn(x)','f(x)');
+            title(['n = ' num2str(n)]);
+            hold off
+                x(j)=-5+(j-1)*(10/n);
+                y(j)=1/(1+(x(j))^2);
+            end
+            \end{lstlisting}
+            
+            \begin{center}
+            \includegraphics[scale=0.6]{runge4_c.png}
+            \includegraphics[scale=0.6]{runge8_c.png}
+            \includegraphics[scale=0.6]{runge12_c.png}
+            \end{center}
+            
+            As we increase n, the approximations using the Barycentric Formula converge to the exact function. Approximations using Chebshev points tend to be more accurate.
+        \end{enumerate}
 \end{enumerate}
 
 
