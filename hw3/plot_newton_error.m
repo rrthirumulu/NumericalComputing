@@ -35,6 +35,5 @@ end
 plot(xbar,err);
 xlabel('x');
 ylabel('Error ( f(x) - P10(x) )');
-hold off
 end
 
