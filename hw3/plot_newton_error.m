@@ -1,8 +1,8 @@
 function T = plot_newton_error()
 % Computer code for plotting the error of our Newton interpolation
 % using equidistributed nodes.
-% Input:  x --- input points;
-% Output: T --- vector of weights to plug into barycentric.m
+% Input:  None
+% Output: Plot of error term
 %
 % Author: Raghav Thirumulu, Perm 3499720
 % Date:   07/11/2018
@@ -32,6 +32,15 @@ for i=1:101
     err(i) = abs(T(i)-f(i));
 end
 
+figure(1);
+plot(xbar,T); hold on
+plot(xbar,f,'r');
+xlabel('x');
+ylabel('y');
+legend('P10(x)','f(x)');
+hold off
+
+figure(2);
 plot(xbar,err);
 xlabel('x');
 ylabel('Error ( f(x) - P10(x) )');
