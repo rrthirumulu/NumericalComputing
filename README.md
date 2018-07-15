@@ -4,3 +4,5 @@ The following repository contains all coding assignments from Math 104A (Numeric
 
 Homework 1: Composite Trapezoid Rule/Rate of Convergence
 
+Homework 2: Interpolation (Lagrange, Hermite), Lebesgue Constant; Runge
+
