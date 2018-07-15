@@ -2,7 +2,7 @@ function T = plot_newton_error()
 % Computer code for plotting the error of our Newton interpolation
 % using equidistributed nodes.
 % Input:  None
-% Output: Plot of error term
+% Output: Plot of f(x), P10(x), and error
 %
 % Author: Raghav Thirumulu, Perm 3499720
 % Date:   07/11/2018
