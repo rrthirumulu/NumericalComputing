@@ -4,7 +4,7 @@ The following repository contains all coding assignments from Math 104A (Numeric
 
 Homework 1: Composite Trapezoid Rule/Rate of Convergence
 
-Homework 2: Interpolation - Nagrange, Lebesgue, Barycentric, Runge
+Homework 2: Interpolation - Lagrange, Lebesgue, Barycentric, Runge
 
 Homework #: Interpolation(cont.) - Newton, Error Bounds, Hermite 
 
