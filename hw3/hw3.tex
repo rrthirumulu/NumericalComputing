@@ -26,17 +26,187 @@
     \item % 1 
         \begin{enumerate}
             \item % 1a
+            We know that 
+            \begin{align*}
+                P_{1}(x) = \frac{(x-x_{1})}{(x_{0}-x_{1}}f(x_{0}) + \frac{(x-x_{1})}{(x_{1}-x_{0}}f(x_{1})
+            \end{align*}
+            We can calculate the error of $ P_{1}(x) $ through the following equation:
+            \begin{align*}
+                |f(x)-P_{1}(x)| &= |\frac{(x-x_{0})(x-x_{1})}{2}f''(x)| \\
+                &= |\frac{(x-x_{0})(x-x_{1})}{2}||f''(x)|
+            \end{align*}            
+            The maximum value of $ (x-x_{0})(x-x_{1}) $ is at $ x = \frac{x_{0}+x_{1}}{2} $. So
+            \begin{align*}
+                |(x-x_{0})(x-x_{1})| &\leq \frac{(x_{1}-x_{0})^2}{4}
+            \end{align*}
+            Also $ |f''(x)| \leq M_{2}$. So we can now write 
+            \begin{align*}
+                |f(x)-P_{1}(x)| &\leq \frac{1}{2}\frac{(x_{1}-x_{0})^2}{4}M_{2} \\
+                &\leq \frac{1}{8}{(x_{1}-x_{0})^2}M_{2}
+            \end{align*}
+            as desired
             \item % 1b
+            Given, $ f(x) = \sin{x} $ where $ 0 \leq x,x_{0},x_{1} \leq \pi/2 $ we can find the second derivative $ f''(x) = -\sin{x}$. \\
+            \\
+            From part (a):
+            \begin{align*}
+                    \| f-P_1 \|_{\infty} &\leq \frac{1}{8}(x_{1}-x_{0})^2M_{2} \\
+                    \frac{1}{8}(x_{1}-x_{0})^2| -\sin{x_0} | &\leq \frac{1}{8}(x_{1}-x_{0})^2| -\sin{x_1} | \\
+                    0 \leq \| f-P_1 \|_{\infty} &\leq \frac{1}{8}x(\pi/2)^2 \\
+                    0 \leq \| f-P_1 \|_{\infty} &\leq \pi^2/32
+            \end{align*}
+            Therefore, the maximum error can be $ \pi^2/32 $. The actual error can be found through the following calculation:
+            \begin{align*}
+                Error &= \frac{1}{8}(\pi/2)^2(\sin{\frac{\pi}{4}}) \\
+                    & = \frac{\pi^2}{32\sqrt{2}}
+            \end{align*}
+            This error fits the bounds that we calculated. 
         \end{enumerate}
     \item % 2 
         \begin{enumerate}
-            \item % 2a
+            \item % 2
+            Let
+                \begin{align*}
+                    w_{n}(x) &= (x-x_{0})(x-x_{1})...(x-x_{n-1})
+                \end{align*}
+            We can express the polynomial \textit{P}\textsubscript{\textit{n}}(\textit{x}) by
+                \begin{align*}
+                    P_{n}(x) &= P_{n-1}(x) + c_{n}w_{n}(x) : c_{n} \in \mathbb{R} 
+                \end{align*}
+            Now let \textit{x} = \textit{x\textsubscript{i}} for some \textit{i} $ \in $ $ {0,1,...,\textit{n}-1} $. Therefore
+                \begin{align*}
+                    w_{n}(x_{i}) &= 0
+                \end{align*}
+            and
+                \begin{align*}
+                    P_{n}(x_{i}) &= P_{n-1}(x_{i}) = f(x_{i})
+                \end{align*}
+            We can obtain \textit{c\textsubscript{n}} from the fact that \textit{P\textsubscript{n}}(\textit{x\textsubscript{n}}) = \textit{f}(\textit{x\textsubscript{n}}). So
+                \begin{align*}
+                    f(x_{n}) &= P_{n-1}(x_{n}) + c_{n}w_{n}(x_{n}) \\
+                    c_{n} &= \frac{f(x_{n}) - P_{n-1}(x_{n})}{w_{n}(x_{n})}
+                \end{align*}
+            We also know that \textit{P}\textsubscript{0}(\textit{x}) = \textit{f}(\textit{x}\textsubscript{0}). So we obtain
+                \begin{align*}
+                    P_{n}(x) &= \sum_{k=0}^{n} c_{k}w_k(x) 
+                \end{align*}
+            From the formula for Langrange's interpolating polynomial, we say
+                \begin{align*}
+                    f[x_{0},x_{1},...,x_{k}] &= \frac{f[x_{0},x_{1},...,x_{k}] - f[x_{0},x_{1},...,x_{k-1}]}{x_k-x_{0}}
+                \end{align*}
+            We can now deduce that
+                \begin{align*}
+                    P_{n+1}(x) &= P_{n}(x) + f[x_{0},x_{1},...,x_{n+1}]w_{n+1}(x)
+                \end{align*}
+            and
+                \begin{align*}
+                    w_{n+1}(x) &= (x-x_{n})w_{n}(x)
+                \end{align*}
+            The formula for approximating \textit{P\textsubscript{n}} using Lagrange's form is
+                \begin{align*}
+                    P_{n}(x) &= \sum_{j=0}^{n} f(x_{j}) \frac{x-x_{k}}{\prod_{k=0}_{k \neq j}^{n}(x_{j}-x_{k})}
+                \end{align*}
+            The coefficient of each term solves to
+                \begin{align*}
+                    f[x_{0},x_{1},...,x_{n}] &= \sum_{j=0}^{n} \frac{f(x_{j})}{\prod_{k=0}_{k \neq j}^{n}(x_{j}-x_{k})}
+                \end{align*}
+            as desired. 
             \item % 2b 
+                We can see from the procedure above that \textit{P\textsubscript{k}} is unaffected by the ordering of the various \textit{x} values (multiplication is commutative). Therefore, we can conclude that the divivded difference is symmetric in its arguments. 
         \end{enumerate}
     \item % 3
         \begin{enumerate}
             \item % 3a
+            \begin{lstlisting}
+            function T = newton(x,y,xbar,n)
+            % Computer code for evaluating the Newton polynomial based on a set of
+            % given points and degree
+            % Input:  x    --- Sample x points for evaluating polynomial
+            %         y    --- Sample y points for evaluating polynomial
+            %         xbar --- Point we want to evaluate at
+            %         n    --- degree of Newton polynomial
+            %
+            % Author: Raghav Thirumulu, Perm 3499720
+            % Date:   07/10/2018
+
+            % Create array of n+1 entries for computing values of c
+            c=zeros(1,n+1);
+            T=0;
+
+            % Iterate through, computing divided difference for each value
+            % We use n+1 because matrix values begin with 1 in MATLAB
+            for i=1:(n+1)
+                f = 1;
+                for j=1:(n+1)
+                    % We do not want a denominator of 0
+                    if j~=i
+                        f = f * (xbar-x(j))/(x(i)-x(j));
+                    end
+                end
+                % Sum each term to find the approximation
+                T = T + y(i)*f;
+            end
+            end
+            \end{lstlisting}
+            \begin{center}
+            \includegraphics[scale=0.6]{3arun.PNG}
+            \end{center}
+            
             \item % 3b
+            \begin{lstlisting}
+            function T = plot_newton_error()
+            % Computer code for plotting the error of our Newton interpolation
+            % using equidistributed nodes.
+            % Input:  None
+            % Output: Plot of f(x), P10(x), and error
+            %
+            % Author: Raghav Thirumulu, Perm 3499720
+            % Date:   07/11/2018
+
+            % Create row vectors for storing values of x and f(x) for evaluating
+            % P10(x)
+            x=zeros(1,11);
+            y=zeros(1,11);
+
+            % Use the given function to iterate and store these points
+            for j=1:11
+                x(j)=-1+(j-1)*(2/10);
+                y(j)=exp((-1)*((x(j))^2));
+            end
+
+            % Create row vectors because we want to solve P10(x) for a 101 different x
+            % values using the same equidistributed node equation
+            xbar=zeros(1,101);
+            f=zeros(1,101);
+            err=zeros(1,101);
+            for i=1:101
+                xbar(i)=-1+(i-1)*(2/100);
+                % Evaluate Newton polynomial at each of the 101 different x points and
+                % solve for the error at each point using the given equation
+                T(i) = newton(x,y,xbar(i),10);
+                f(i)=exp((-1)*(xbar(i)^2));
+                err(i) = abs(T(i)-f(i));
+            end
+
+            figure(1);
+            plot(xbar,T); hold on
+            plot(xbar,f,'r');
+            xlabel('x');
+            ylabel('y');
+            legend('P10(x)','f(x)');
+            hold off
+
+            figure(2);
+            plot(xbar,err);
+            xlabel('x');
+            ylabel('Error ( f(x) - P10(x) )');
+            end
+            \end{lstlisting}
+            \begin{center}
+                \includegraphics[scale=0.6]{3b1.png}
+                \includegraphics[scale=0.6]{3b2.png}
+            \end{center}
+
         \end{enumerate}
     \item % 4 
         Given: \textit{f}(0)=0, \textit{f}'(0)=0, \textit{f}(1)=2, \textit{f}'(1)=3. Let 
