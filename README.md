@@ -6,5 +6,7 @@ Homework 1: Composite Trapezoid Rule/Rate of Convergence
 
 Homework 2: Interpolation - Lagrange, Lebesgue, Barycentric, Runge
 
-Homework #: Interpolation(cont.) - Newton, Error Bounds, Hermite 
+Homework 3: Interpolation(cont.) - Newton, Error Bounds, Hermite 
+
+Homework 4: Natural Spline Interpolation
 
